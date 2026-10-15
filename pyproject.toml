@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaugescalp"
+version = "0.1.0"
+description = "GaugeScalp implementation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "matplotlib>=3.8,<4", "scipy>=1.15,<2", "torch>=2.4,<3"]
+
+[project.scripts]
+gaugescalp-report = "gaugescalp.common:report"
+gaugescalp = "gaugescalp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
