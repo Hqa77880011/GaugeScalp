@@ -44,17 +44,18 @@ Outputs include `model.pt`, `history.csv`, per-mask `metrics.csv`/JSON and trial
 
 ## Registered compact reproduction setting
 
-Eight nonconstant spherical modes, fixed regularization/noise convention, 30 decoder epochs and 16/8/4-channel stress masks. Input epochs use at least 16 registered electrodes; all mask/reference controls are paired after subject splitting.
+Two oscillatory dipoles produce potentials at 32 registered scalp coordinates using an analytic lead field, subject gain, independent common reference and sensor noise. The task label identifies the stronger stimulated source. Subject-disjoint epochs feed the existing geometry and decoder pipeline.
 
-Run from the repository root after installation. The following commands use the registered setting; they are provided for execution and have not been run as part of the source review.
+Generate the declared input process, preprocess it, then use the existing method entry points:
 
 ```bash
-gaugescalp prepare --config configs/reproduce.json --input data/raw_epochs.npz --data data/reproduce
+python -m gaugescalp.synthetic --output data/generated/eeg.npz --subjects 24 --seed 17
+gaugescalp prepare --config configs/reproduce.json --input data/generated/eeg.npz --data data/reproduce
 gaugescalp train --config configs/reproduce.json --data data/reproduce --output runs/reproduce
 gaugescalp evaluate --config configs/reproduce.json --data data/reproduce --checkpoint runs/reproduce/model.pt --output runs/reproduce
 ```
 
-Required external inputs: subject-disjoint EEG epochs, labels and actual electrode coordinates (at least 16 channels). The formal input fields are specified above; preparation/training interfaces consume those fields directly. No particular paper dataset or pretrained task model is assumed beyond these declared inputs.
+`eeg.json` records the data-generating assumptions and seed. The configuration records `input_source`. All inputs for this selected setting are generated locally using installed package dependencies.
 
 ## Multiple seeds
 

@@ -12,5 +12,6 @@
     8,
     4
   ],
-  "variant": "gaugescalp"
+  "variant": "gaugescalp",
+  "input_source": "dipole_field_eeg"
 }
