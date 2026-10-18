@@ -1,0 +1,16 @@
+{
+  "seed": 17,
+  "modes": 8,
+  "regularization": 0.01,
+  "noise_variance": 1.0,
+  "epochs": 30,
+  "batch_size": 32,
+  "lr": 0.001,
+  "device": "cpu",
+  "mask_sizes": [
+    16,
+    8,
+    4
+  ],
+  "variant": "gaugescalp"
+}

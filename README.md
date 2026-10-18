@@ -42,6 +42,20 @@ Train and evaluate separate runs for `raw`, `car`, `spline`, `no_covariance`, `c
 
 Outputs include `model.pt`, `history.csv`, per-mask `metrics.csv`/JSON and trial probabilities. Metrics are accuracy, balanced accuracy, macro-F1, worst-mask F1, ECE, AURC, reference-orbit coefficient RMS and normalized cross-montage coefficient discrepancy. The exact same signal is used for each additive-reference control. External BCI evaluation uses a model trained on the matching label space and canonical basis; preparation never merges subjects across datasets implicitly. Comparison plotting writes PNG/SVG from measured files.
 
+## Registered compact reproduction setting
+
+Eight nonconstant spherical modes, fixed regularization/noise convention, 30 decoder epochs and 16/8/4-channel stress masks. Input epochs use at least 16 registered electrodes; all mask/reference controls are paired after subject splitting.
+
+Run from the repository root after installation. The following commands use the registered setting; they are provided for execution and have not been run as part of the source review.
+
+```bash
+gaugescalp prepare --config configs/reproduce.json --input data/raw_epochs.npz --data data/reproduce
+gaugescalp train --config configs/reproduce.json --data data/reproduce --output runs/reproduce
+gaugescalp evaluate --config configs/reproduce.json --data data/reproduce --checkpoint runs/reproduce/model.pt --output runs/reproduce
+```
+
+Required external inputs: subject-disjoint EEG epochs, labels and actual electrode coordinates (at least 16 channels). The formal input fields are specified above; preparation/training interfaces consume those fields directly. No particular paper dataset or pretrained task model is assumed beyond these declared inputs.
+
 ## Multiple seeds
 
 Run matched configurations with different seeds in separate directories, then aggregate the generated metric files:
